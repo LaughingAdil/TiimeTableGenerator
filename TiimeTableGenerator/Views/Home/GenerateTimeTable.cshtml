@@ -1,0 +1,115 @@
+﻿@model TiimeTableGenerator.Models.TimeTableInput
+
+@{
+    ViewData["Title"] = "Generate Time Table";
+}
+
+<div id="downloadable" style="background-color: white; padding:30px;text-align:center" class="text-centre" >
+   
+  
+<h1 style="text-align:center"> <br/>
+
+   <a id="download" style="text-align:right;background-color:darkolivegreen;color:white;" class=" btn  text-end">Download</a>
+</h1>
+
+@{
+    var conflictSummary = new Dictionary<string, int>();
+}
+
+@for (int i = 0; i < Model.NumberOfSubjects; i++)
+{
+    var firstColumnSubjects = new List<string>();
+
+    @for (int j = 1; j <= Model.NumberOfClassRooms; j++)
+    {
+        var columnIndex = (i + j - 1) % Model.NumberOfSubjects; // Adjusted calculation to start from 1
+        var subjectName = Model.Subjects[columnIndex].Name;
+
+        firstColumnSubjects.Add(subjectName);
+    }
+
+    var conflicts = firstColumnSubjects.GroupBy(x => x)
+                                        .Where(group => group.Count() > 1)
+                                        .Select(group => group.Key)
+                                        .ToList();
+
+    foreach (var conflict in conflicts)
+    {
+        if (conflictSummary.ContainsKey(conflict))
+        {
+            conflictSummary[conflict]++;
+        }
+        else
+        {
+            conflictSummary[conflict] = 1;
+        }
+    }
+}
+
+
+@for (int i = 1; i <= Model.NumberOfClassRooms; i++)
+{
+    <h4  style="margin:15px;">Classroom @i</h4>
+    <table class="table-container-custom table-striped border-black table-bordered">
+        <thead >
+            <!--tr>
+                <td><a class="btn btn-primary">Download</a></td>
+            </!--tr-->
+            <tr>
+                @for (int period = 1; period <= Model.NumberOfPeriods; period++)
+                {
+                    <th>Period @period</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var subject in Model.Subjects)
+                {
+                    var columnIndex = (subject.Id + i - 1) % Model.NumberOfSubjects; // Adjusted calculation to start from 1
+                    var subjectName = Model.Subjects[columnIndex].Name;
+
+                    <td>@subjectName</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}
+
+<!-- Display the conflict summary table -->
+<div class="container-xxl" style="padding-bottom:20px; padding-top:10px;">
+<h3>Conflict Summary</h3>
+<table class="table-container-custom border-black table-bordered" >
+    <thead>
+        <tr>
+            <th>Subject Name</th>
+            <th>Conflicts</th>
+        </tr>
+    </thead>
+        <tbody>
+        @foreach (var conflict in conflictSummary)
+        {
+            <tr>
+                <td>@conflict.Key</td>
+                <td>@conflict.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+    .table-container-custom {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+
+    
+</style>
+    
+    </div>
+</div>

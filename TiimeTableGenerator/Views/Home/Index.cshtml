@@ -1,0 +1,45 @@
+﻿@model TiimeTableGenerator.Models.TimeTableInput
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container text-centre " lang="en" style=" background-color:white;opacity:90%;padding-top:20px;" >
+    
+    
+    <form class="form-control" asp-action="GenerateTimeTable" method="post" id="forminput" style="margin:20px; ">
+        <!-- Use the model properties for binding the input fields -->
+        <h3 class=" text-primary" >How many classrooms do you have?</h3>
+        <input asp-for="NumberOfClassRooms" type="number" placeholder="Enter number of classrooms" class="form-control mb-3 text-white" style="background-color: lightgray; margin-top: 10px; margin-bottom: 10px;" />
+        <h3 class="text-primary">How many periods are there everyday?</h3>
+        <input asp-for="NumberOfPeriods" type="number" placeholder="Enter number of periods" class="form-control mb-3  text-light" style="color:black;background-color:lightgray " />
+        <h3 class="text-primary">How many subjects?</h3>
+        <input asp-for="NumberOfSubjects" type="number" placeholder="Enter number of subjects" id="numberOfSubjects" class="form-control mb-3  text-light" style="background-color:lightgrey" />
+
+        <div id="subjectFieldsContainer">
+            <!-- Existing subjects input fields will be appended here dynamically -->
+        </div>
+
+        <button class="btn btn-primary mt-3 mb-3" style="background-color:black;" type="submit" >Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('numberOfSubjects').addEventListener('input', function () {
+            var numberOfSubjects = parseInt(this.value) || 0;
+            var subjectFieldsContainer = document.getElementById('subjectFieldsContainer');
+            subjectFieldsContainer.innerHTML = ''; // Clear existing fields
+
+            for (var i = 0; i < numberOfSubjects; i++) {
+                var inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.classList.add("form-control", "mb-3", "bg-black", "text-white");
+                inputField.name = 'Subjects[' + i + '].Name'; // Bind to the Name property of each Subject
+                inputField.placeholder = 'Enter name of subject';
+                subjectFieldsContainer.appendChild(inputField);
+                
+                
+            }
+        });
+    </script>
+
+
+</div>
