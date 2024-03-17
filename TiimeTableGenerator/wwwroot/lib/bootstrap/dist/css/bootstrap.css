@@ -5959,6 +5959,12 @@ textarea.form-control-lg {
     padding: var(--bs-modal-padding);
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    border: 0;
+}
+
 .modal-footer {
     margin-top:auto;
     display: flex;
