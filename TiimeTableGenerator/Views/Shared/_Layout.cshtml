@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TiimeTableGenerator</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <!--link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /-->
     
     <script src = "~/js/html2pdf.bundle.min.js"></script>
    <script>
@@ -28,18 +28,32 @@
                })
        }
    </script>
-        
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Ensure body takes up at least the full viewport height */
+            background-image: url('/Images/classtwo.jpg');
+            background-size: cover; /* Cover the entire background */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; /* Ensure the background image remains fixed */
+        }
+    </style>
     
 </head>
-<body style="background-image: url('/Images/classtwo.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+
+
+
+<body class="body" >
 
 
     <header style="background-color:black ;opacity:80%;" class="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black box-shadow mb-3 ">
 
             <div class="container-fluid" style="background-color:black ">
-                <a class="nav-link text-light">
-                    TimeTable Generator
+                <a class="nav-link text-light" style="margin-right:20px;">
+                    TimeTable Generator 
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -65,11 +79,12 @@
     </div>
 
  
-    <footer class=" footer text-centre text-muted text-light " style="opacity: 80% ;background-color:black;position:absolute; text-align:center;right:0;left:0;bottom:0;padding:10px;">
+    <footer id="myFooter" class="footer text-centre text-muted text-light " style="opacity: 80% ;background-color:black;position:fixed; text-align:center;right:0;left:0;bottom:0;padding:10px;">
         <div class="container text-align-centre" >
-            Mohammed Adil <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            Go To Source Code <a href="https://github.com/LaughingAdil/TiimeTableGenerator.git" >GitHub</a>
         </div>
     </footer>
+   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
